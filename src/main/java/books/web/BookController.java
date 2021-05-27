@@ -38,4 +38,9 @@ public class BookController {
     private void delete(@PathVariable Long id) {
         bookService.delete(id);
     }
+
+    @GetMapping("/books/{id}")
+    private BookEntity get(@PathVariable Long id) {
+        return bookService.get(id);
+    }
 }
