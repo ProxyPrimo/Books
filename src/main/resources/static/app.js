@@ -17,6 +17,18 @@ document.querySelector("#loadBooks").onclick = () => {
             });
 
             document.querySelector("#main-tbody").innerHTML = body;
+
+            [...document.querySelectorAll(".btn-delete")].forEach(btn => {
+                btn.onclick = e => {
+                    e.preventDefault();
+                    const id = e.target.getAttribute("data-id");
+                    fetch(`/books/${id}`, {
+                        method: "DELETE"
+                    }).then(x => {
+                        document.querySelector("#loadBooks").onclick();
+                    })
+                }
+            })
         })
 }
 
@@ -39,5 +51,10 @@ document.querySelector("#create-btn").onclick = e => {
             "Content-Type": "application/json"
         }
     }).then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => {
+            document.querySelector("#loadBooks").onclick();
+        })
 }
+
+
+document.querySelector("#loadBooks").onclick();

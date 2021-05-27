@@ -3,10 +3,8 @@ package books.web;
 import books.data.BookEntity;
 import books.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +23,19 @@ public class BookController {
     }
 
     @PostMapping("/books")
+    @ResponseStatus(HttpStatus.CREATED)
     private BookEntity create(@RequestBody BookEntity bookEntity) {
         return bookService.create(bookEntity);
+    }
+
+    @PatchMapping("/books/{id}")
+    private BookEntity edit(@PathVariable Long id, @RequestBody BookEntity bookEntity) {
+        return bookService.edit(id, bookEntity);
+    }
+
+    @DeleteMapping("/books/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void delete(@PathVariable Long id) {
+        bookService.delete(id);
     }
 }

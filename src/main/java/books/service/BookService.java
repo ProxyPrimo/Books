@@ -25,4 +25,17 @@ public class BookService {
     public BookEntity create(BookEntity bookEntity) {
         return bookRepository.saveAndFlush(bookEntity);
     }
+
+    public BookEntity edit(Long id, BookEntity bookEntity) {
+        BookEntity dbBook = bookRepository.findById(id).orElseThrow();
+        dbBook.setAuthor(bookEntity.getAuthor());
+        dbBook.setTitle(bookEntity.getTitle());
+        dbBook.setIsbn(bookEntity.getIsbn());
+
+        return bookRepository.saveAndFlush(dbBook);
+    }
+
+    public void delete(Long id) {
+        bookRepository.deleteById(id);
+    }
 }
