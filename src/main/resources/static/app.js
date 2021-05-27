@@ -19,3 +19,25 @@ document.querySelector("#loadBooks").onclick = () => {
             document.querySelector("#main-tbody").innerHTML = body;
         })
 }
+
+document.querySelector("#create-btn").onclick = e => {
+    e.preventDefault();
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const isbn = document.querySelector("#isbn").value;
+
+    const body = {
+        title
+        , author
+        , isbn
+    };
+
+    fetch("/books", {
+        body: JSON.stringify(body)
+        , method: 'POST'
+        , headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json())
+        .then(res => console.log(res))
+}
